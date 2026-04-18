@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mochi Print - File Upload</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#b6dffd",
+                        "error-container": "#fa746f",
+                        "surface-tint": "#2e695e",
+                        "surface-dim": "#d4dbda",
+                        "secondary-dim": "#644d50",
+                        "tertiary-fixed": "#b6dffd",
+                        "on-surface": "#2d3433",
+                        "surface-bright": "#f8faf9",
+                        "primary": "#2e695e",
+                        "on-primary-fixed-variant": "#2a655a",
+                        "on-tertiary-fixed": "#0f3e56",
+                        "error-dim": "#67040d",
+                        "on-tertiary-fixed-variant": "#325a74",
+                        "surface": "#f8faf9",
+                        "error": "#a83836",
+                        "on-background": "#2d3433",
+                        "inverse-on-surface": "#9b9d9d",
+                        "surface-container-low": "#f1f4f3",
+                        "primary-dim": "#205c52",
+                        "surface-container": "#eaefee",
+                        "surface-container-high": "#e4e9e8",
+                        "surface-container-highest": "#dde4e3",
+                        "on-surface-variant": "#596060",
+                        "on-tertiary-container": "#27516a",
+                        "primary-fixed": "#b2efe0",
+                        "outline-variant": "#acb3b2",
+                        "on-primary-container": "#1e5b50",
+                        "on-secondary-container": "#634c4f",
+                        "secondary-fixed": "#fbdbde",
+                        "secondary-fixed-dim": "#eccdd0",
+                        "on-secondary-fixed-variant": "#6d5658",
+                        "inverse-primary": "#c0fdee",
+                        "background": "#f8faf9",
+                        "on-primary-fixed": "#00483e",
+                        "secondary-container": "#fbdbde",
+                        "primary-container": "#b2efe0",
+                        "tertiary-dim": "#2e5770",
+                        "on-secondary": "#fff7f7",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#0b0f0f",
+                        "surface-variant": "#dde4e3",
+                        "tertiary": "#3b637d",
+                        "secondary": "#71595c",
+                        "on-primary": "#e3fff7",
+                        "primary-fixed-dim": "#a4e0d2",
+                        "on-secondary-fixed": "#4f3a3c",
+                        "on-error": "#fff7f6",
+                        "on-tertiary": "#f5f9ff",
+                        "on-error-container": "#6e0a12",
+                        "outline": "#757c7b",
+                        "tertiary-fixed-dim": "#a8d1ef"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans", "sans-serif"],
+                        "body": ["Plus Jakarta Sans", "sans-serif"],
+                        "label": ["Plus Jakarta Sans", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .tonal-shift { transition: background-color 0.3s ease; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex font-body">
+<!-- SideNavBar (Shared Component) -->
+<nav class="fixed left-0 top-0 h-full w-72 flex flex-col p-6 gap-2 bg-emerald-50 dark:bg-slate-950 font-['Plus_Jakarta_Sans'] text-sm font-semibold rounded-r-[3rem] h-screen tonal-depth via surface-container-low flat no-line transition-all duration-300 ease-in-out hidden md:flex z-50">
+<!-- Header -->
+<div class="flex items-center gap-4 mb-8 px-4">
+<div class="w-12 h-12 bg-primary-container rounded-full flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary-container" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div>
+<h1 class="text-xl font-bold text-emerald-900 dark:text-emerald-100">Mochi Print</h1>
+<p class="text-xs text-emerald-700/70 dark:text-slate-400">Vending OS</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<div class="flex flex-col gap-2 flex-grow">
+<!-- Home -->
+<a class="flex items-center gap-3 px-5 py-3 text-emerald-800/70 dark:text-slate-400 hover:bg-emerald-100 dark:hover:bg-slate-800 rounded-full transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="home">home</span>
+<span>Home</span>
+</a>
+<!-- My Files (Active for File Upload context) -->
+<a class="flex items-center gap-3 px-5 py-3 bg-emerald-200 dark:bg-emerald-900 text-emerald-900 dark:text-emerald-100 rounded-full font-bold transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="folder_open" style="font-variation-settings: 'FILL' 1;">folder_open</span>
+<span>My Files</span>
+</a>
+<!-- Recent Activity -->
+<a class="flex items-center gap-3 px-5 py-3 text-emerald-800/70 dark:text-slate-400 hover:bg-emerald-100 dark:hover:bg-slate-800 rounded-full transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="history">history</span>
+<span>Recent Activity</span>
+</a>
+<!-- Settings -->
+<a class="flex items-center gap-3 px-5 py-3 text-emerald-800/70 dark:text-slate-400 hover:bg-emerald-100 dark:hover:bg-slate-800 rounded-full transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</div>
+<!-- CTA -->
+<div class="mt-auto pt-4">
+<button class="w-full bg-primary text-on-primary py-4 px-6 rounded-full font-bold shadow-lg shadow-primary-dim/20 hover:bg-primary-dim transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="add" style="font-variation-settings: 'FILL' 1;">add</span>
+                New Print Job
+            </button>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-grow ml-0 md:ml-72 flex flex-col min-h-screen">
+<!-- TopNavBar (Shared Component - Mobile/Tablet only since Web has SideNav, but keeping it as requested per layout rules, though usually mutually exclusive. We'll hide on md to follow standard responsive nav patterns if SideNav is present, but the prompt says 'TopNavBar' is shared. We'll use it as a mobile header) -->
+<header class="md:hidden sticky top-0 z-50 flex justify-between items-center px-6 py-3 max-w-7xl mx-auto w-full bg-emerald-50/80 dark:bg-slate-900/80 backdrop-blur-xl font-['Plus_Jakarta_Sans'] tracking-tight rounded-full mt-4 mx-4 no-line tonal-shift shadow-xl shadow-emerald-900/5">
+<div class="text-2xl font-black text-emerald-800 dark:text-emerald-300">
+                Mochi Mint
+            </div>
+<div class="flex items-center gap-4 text-emerald-800 dark:text-emerald-400">
+<button class="hover:bg-emerald-100/50 dark:hover:bg-slate-800 transition-colors p-2 rounded-full scale-95 active:scale-90 duration-200">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="hover:bg-emerald-100/50 dark:hover:bg-slate-800 transition-colors p-2 rounded-full scale-95 active:scale-90 duration-200">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-primary-container overflow-hidden border-2 border-transparent">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="close up portrait of a young woman with natural makeup in soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkhN_xJKSR-HtlFOxsYnGZynfVdlOrXq7hhOTpNPjJnlg5QNeFO4NsY9l3-oCGmBLEbWuToUqn5an6L2vIKvhZYhBEjdiYqdbyMO47ExXPs0qqzCFpaXbAMBlLZqggBtNqi3tDCbNecKvnVBSHIXIlmMLa0iDtuIoUi0MIrcoVcr-UBEMoVeJGnfKjDjoTJ1TmI9sNIMZWgeybUqFAiXMtDzNTzZpBtzcUNfX365liAREjLRsLKFjinWMUznQw2fbOjK1oKMhz5Q"/>
+</div>
+</div>
+</header>
+<div class="p-8 md:p-12 lg:p-16 max-w-7xl mx-auto w-full flex-grow flex flex-col gap-12">
+<!-- Page Header -->
+<div class="flex flex-col gap-4">
+<h2 class="text-[3.5rem] leading-none font-headline font-extrabold text-on-surface tracking-[-0.02em]">Upload Files</h2>
+<p class="text-lg text-on-surface-variant max-w-2xl">Drop your PDFs here. We'll handle the margins and make sure everything looks perfect before printing.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+<!-- Main Upload Area -->
+<div class="lg:col-span-2 flex flex-col gap-8">
+<!-- Drag and Drop Zone -->
+<div class="bg-surface-container-lowest rounded-xl p-12 flex flex-col items-center justify-center text-center gap-6 border-2 border-dashed border-outline-variant/30 hover:border-primary/50 hover:bg-surface-container-low transition-all duration-300 cursor-pointer group shadow-sm">
+<div class="w-24 h-24 bg-primary-container rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-5xl text-primary" data-icon="upload_file">upload_file</span>
+</div>
+<div>
+<h3 class="text-2xl font-bold text-on-surface mb-2">Drag &amp; Drop your PDFs</h3>
+<p class="text-on-surface-variant">or <span class="text-primary font-semibold underline decoration-primary/30 underline-offset-4">browse your device</span></p>
+</div>
+<p class="text-sm font-label uppercase tracking-wider text-outline mt-4">Max file size: 50MB</p>
+</div>
+<!-- File Progress Cards -->
+<div class="flex flex-col gap-4">
+<h4 class="text-xl font-bold text-on-surface mb-2">Current Uploads</h4>
+<!-- Uploading File -->
+<div class="bg-surface-container-lowest rounded-lg p-6 flex items-center gap-6 shadow-sm">
+<div class="w-14 h-14 bg-secondary-container rounded-full flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="picture_as_pdf" style="font-variation-settings: 'FILL' 1;">picture_as_pdf</span>
+</div>
+<div class="flex-grow flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<span class="font-bold text-on-surface">Annual_Report_2024.pdf</span>
+<span class="text-sm text-primary font-bold">64%</span>
+</div>
+<!-- Progress Bar -->
+<div class="h-3 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-primary-container rounded-full w-[64%]"></div>
+</div>
+<span class="text-xs text-on-surface-variant">4.2 MB / 6.5 MB</span>
+</div>
+<button class="p-3 text-outline hover:text-error transition-colors rounded-full hover:bg-surface-container-low">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<!-- Completed File -->
+<div class="bg-surface-container-lowest rounded-lg p-6 flex items-center gap-6 shadow-sm">
+<div class="w-14 h-14 bg-primary-container rounded-full flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex-grow flex flex-col gap-1">
+<div class="flex justify-between items-center">
+<span class="font-bold text-on-surface">Presentation_Deck_Final.pdf</span>
+</div>
+<span class="text-sm text-on-surface-variant">12.8 MB • Ready to print</span>
+</div>
+<button class="p-3 text-outline hover:text-error transition-colors rounded-full hover:bg-surface-container-low">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Guidelines Sidebar -->
+<div class="bg-surface-container-low rounded-xl p-8 flex flex-col gap-8">
+<h3 class="text-2xl font-bold text-on-surface">Print Guidelines</h3>
+<p class="text-on-surface-variant leading-relaxed">Follow these sweet tips to ensure your prints come out looking as soft and vibrant as a fresh mochi.</p>
+<div class="flex flex-col gap-6">
+<!-- Resolution -->
+<div class="flex gap-4 items-start">
+<div class="w-12 h-12 bg-surface-container-lowest rounded-full flex items-center justify-center shrink-0 shadow-sm text-primary">
+<span class="material-symbols-outlined" data-icon="high_quality">high_quality</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface text-lg">Resolution</h4>
+<p class="text-on-surface-variant mt-1">Keep images at 300 DPI for crisp, clear details.</p>
+</div>
+</div>
+<!-- Margins -->
+<div class="flex gap-4 items-start">
+<div class="w-12 h-12 bg-surface-container-lowest rounded-full flex items-center justify-center shrink-0 shadow-sm text-primary">
+<span class="material-symbols-outlined" data-icon="crop_free">crop_free</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface text-lg">Margins &amp; Bleed</h4>
+<p class="text-on-surface-variant mt-1">Include a 0.125" bleed if your design goes to the edge.</p>
+</div>
+</div>
+<!-- Color Mode -->
+<div class="flex gap-4 items-start">
+<div class="w-12 h-12 bg-surface-container-lowest rounded-full flex items-center justify-center shrink-0 shadow-sm text-primary">
+<span class="material-symbols-outlined" data-icon="palette">palette</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface text-lg">Color Mode</h4>
+<p class="text-on-surface-variant mt-1">Use CMYK color mode for the most accurate print colors.</p>
+</div>
+</div>
+</div>
+<div class="mt-4 p-6 bg-primary-container rounded-lg">
+<p class="text-on-primary-container font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="lightbulb" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+                            Pro Tip: Flatten your PDFs to avoid font issues!
+                        </p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

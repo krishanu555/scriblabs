@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mochi Print - Authentication</title>
+<!-- Google Fonts: Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#b6dffd",
+                    "error-container": "#fa746f",
+                    "surface-tint": "#2e695e",
+                    "surface-dim": "#d4dbda",
+                    "secondary-dim": "#644d50",
+                    "tertiary-fixed": "#b6dffd",
+                    "on-surface": "#2d3433",
+                    "surface-bright": "#f8faf9",
+                    "primary": "#2e695e",
+                    "on-primary-fixed-variant": "#2a655a",
+                    "on-tertiary-fixed": "#0f3e56",
+                    "error-dim": "#67040d",
+                    "on-tertiary-fixed-variant": "#325a74",
+                    "surface": "#f8faf9",
+                    "error": "#a83836",
+                    "on-background": "#2d3433",
+                    "inverse-on-surface": "#9b9d9d",
+                    "surface-container-low": "#f1f4f3",
+                    "primary-dim": "#205c52",
+                    "surface-container": "#eaefee",
+                    "surface-container-high": "#e4e9e8",
+                    "surface-container-highest": "#dde4e3",
+                    "on-surface-variant": "#596060",
+                    "on-tertiary-container": "#27516a",
+                    "primary-fixed": "#b2efe0",
+                    "outline-variant": "#acb3b2",
+                    "on-primary-container": "#1e5b50",
+                    "on-secondary-container": "#634c4f",
+                    "secondary-fixed": "#fbdbde",
+                    "secondary-fixed-dim": "#eccdd0",
+                    "on-secondary-fixed-variant": "#6d5658",
+                    "inverse-primary": "#c0fdee",
+                    "background": "#f8faf9",
+                    "on-primary-fixed": "#00483e",
+                    "secondary-container": "#fbdbde",
+                    "primary-container": "#b2efe0",
+                    "tertiary-dim": "#2e5770",
+                    "on-secondary": "#fff7f7",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-surface": "#0b0f0f",
+                    "surface-variant": "#dde4e3",
+                    "tertiary": "#3b637d",
+                    "secondary": "#71595c",
+                    "on-primary": "#e3fff7",
+                    "primary-fixed-dim": "#a4e0d2",
+                    "on-secondary-fixed": "#4f3a3c",
+                    "on-error": "#fff7f6",
+                    "on-tertiary": "#f5f9ff",
+                    "on-error-container": "#6e0a12",
+                    "outline": "#757c7b",
+                    "tertiary-fixed-dim": "#a8d1ef"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {},
+            "fontFamily": {
+                    "headline": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "body": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "label": [
+                            "Plus Jakarta Sans"
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        /* Base styles to ensure consistency */
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center relative overflow-hidden bg-surface">
+<!-- Ambient Kawaii-Tech Background Elements -->
+<div class="absolute top-[-15%] left-[-10%] w-[40vw] h-[40vw] bg-primary-container rounded-full blur-[100px] opacity-60 pointer-events-none"></div>
+<div class="absolute bottom-[-20%] right-[-10%] w-[50vw] h-[50vw] bg-tertiary-container rounded-full blur-[120px] opacity-40 pointer-events-none"></div>
+<!-- Main Authentication Canvas -->
+<main class="relative z-10 w-full max-w-[28rem] px-6">
+<div class="bg-surface-container-lowest rounded-xl p-10 flex flex-col items-center text-center shadow-[0_12px_40px_rgba(45,52,51,0.06)] border border-outline-variant/10">
+<!-- Branding Icon -->
+<div class="w-24 h-24 bg-primary-container rounded-full flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary text-5xl" style="font-variation-settings: 'FILL' 1;">
+                    print
+                </span>
+</div>
+<!-- Typography Header -->
+<h1 class="font-headline text-4xl font-extrabold tracking-tight text-on-surface mb-2">
+                Hello there!
+            </h1>
+<p class="font-body text-lg text-on-surface-variant mb-10">
+                Enter your PIN to wake me up.
+            </p>
+<!-- Bubbly PIN Input Area -->
+<div class="w-full mb-10">
+<div class="flex justify-center gap-4">
+<!-- Active/Focused State -->
+<div class="w-16 h-20 bg-surface-container-lowest flex items-center justify-center text-3xl font-headline font-extrabold text-primary outline outline-2 outline-primary shadow-sm rounded-full">
+<span>4</span>
+</div>
+<!-- Filled State -->
+<div class="w-16 h-20 bg-surface-container-low flex items-center justify-center text-3xl font-headline font-extrabold text-on-surface transition-colors rounded-full">
+<span>2</span>
+</div>
+<!-- Empty State -->
+<div class="w-16 h-20 bg-surface-container-low flex items-center justify-center text-3xl font-headline font-extrabold text-outline transition-colors rounded-full">
+<span class="w-2 h-2 bg-outline-variant rounded-full"></span>
+</div>
+<!-- Empty State -->
+<div class="w-16 h-20 bg-surface-container-low flex items-center justify-center text-3xl font-headline font-extrabold text-outline transition-colors rounded-full">
+<span class="w-2 h-2 bg-outline-variant rounded-full"></span>
+</div>
+</div>
+<button class="mt-6 text-sm font-label font-semibold text-on-surface-variant hover:text-primary transition-colors tracking-wide">Can't see PIN or QR?</button>
+</div>
+<!-- Soft Separator -->
+<div class="w-full flex items-center gap-4 mb-8">
+<div class="flex-1 h-[2px] bg-surface-container-high rounded-full"></div>
+<span class="font-label text-xs uppercase tracking-[0.05em] text-on-surface-variant font-semibold">
+                    or
+                </span>
+<div class="flex-1 h-[2px] bg-surface-container-high rounded-full"></div>
+</div>
+<!-- Primary Action: QR Code Button -->
+<button class="w-full bg-primary hover:bg-primary-dim text-on-primary rounded-full py-5 px-8 flex items-center justify-center gap-3 transition-colors duration-300 shadow-[0_8px_24px_rgba(46,105,94,0.15)] group">
+<span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform duration-300">
+                    qr_code_scanner
+                </span>
+<span class="font-headline text-xl font-bold tracking-tight">
+                    Scan QR Code
+                </span>
+</button>
+<!-- Secondary Help Action -->
+</div>
+</main>
+<footer class="absolute bottom-0 left-0 w-full p-8 flex justify-between items-center z-20">
+<button class="flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant transition-colors group shadow-sm">
+<span class="material-symbols-outlined text-lg">help</span>
+<span class="font-label text-sm font-semibold tracking-wide">Help</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant transition-colors group shadow-sm">
+<span class="material-symbols-outlined text-lg">language</span>
+<span class="font-label text-sm font-semibold tracking-wide">Language</span>
+</button>
+</footer></body></html>

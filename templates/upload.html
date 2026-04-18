@@ -1,258 +1,159 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Mochi Print - File Upload</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "tertiary-container": "#b6dffd",
-                        "error-container": "#fa746f",
-                        "surface-tint": "#2e695e",
-                        "surface-dim": "#d4dbda",
-                        "secondary-dim": "#644d50",
-                        "tertiary-fixed": "#b6dffd",
-                        "on-surface": "#2d3433",
-                        "surface-bright": "#f8faf9",
-                        "primary": "#2e695e",
-                        "on-primary-fixed-variant": "#2a655a",
-                        "on-tertiary-fixed": "#0f3e56",
-                        "error-dim": "#67040d",
-                        "on-tertiary-fixed-variant": "#325a74",
-                        "surface": "#f8faf9",
-                        "error": "#a83836",
-                        "on-background": "#2d3433",
-                        "inverse-on-surface": "#9b9d9d",
-                        "surface-container-low": "#f1f4f3",
-                        "primary-dim": "#205c52",
-                        "surface-container": "#eaefee",
-                        "surface-container-high": "#e4e9e8",
-                        "surface-container-highest": "#dde4e3",
-                        "on-surface-variant": "#596060",
-                        "on-tertiary-container": "#27516a",
-                        "primary-fixed": "#b2efe0",
-                        "outline-variant": "#acb3b2",
-                        "on-primary-container": "#1e5b50",
-                        "on-secondary-container": "#634c4f",
-                        "secondary-fixed": "#fbdbde",
-                        "secondary-fixed-dim": "#eccdd0",
-                        "on-secondary-fixed-variant": "#6d5658",
-                        "inverse-primary": "#c0fdee",
-                        "background": "#f8faf9",
-                        "on-primary-fixed": "#00483e",
-                        "secondary-container": "#fbdbde",
-                        "primary-container": "#b2efe0",
-                        "tertiary-dim": "#2e5770",
-                        "on-secondary": "#fff7f7",
-                        "surface-container-lowest": "#ffffff",
-                        "inverse-surface": "#0b0f0f",
-                        "surface-variant": "#dde4e3",
-                        "tertiary": "#3b637d",
-                        "secondary": "#71595c",
-                        "on-primary": "#e3fff7",
-                        "primary-fixed-dim": "#a4e0d2",
-                        "on-secondary-fixed": "#4f3a3c",
-                        "on-error": "#fff7f6",
-                        "on-tertiary": "#f5f9ff",
-                        "on-error-container": "#6e0a12",
-                        "outline": "#757c7b",
-                        "tertiary-fixed-dim": "#a8d1ef"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "1rem",
-                        "lg": "2rem",
-                        "xl": "3rem",
-                        "full": "9999px"
-                    },
-                    "fontFamily": {
-                        "headline": ["Plus Jakarta Sans", "sans-serif"],
-                        "body": ["Plus Jakarta Sans", "sans-serif"],
-                        "label": ["Plus Jakarta Sans", "sans-serif"]
-                    }
-                }
-            }
-        }
-    </script>
-<style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .tonal-shift { transition: background-color 0.3s ease; }
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <title>Mochi Print - Upload</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .page-canvas { width: 100%; height: 100%; object-fit: contain; }
+        .page-removed::after { content: "✕"; position: absolute; inset: 0; background: rgba(251, 219, 222, 0.8); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: #a83836; font-weight: 900; z-index: 30; }
     </style>
 </head>
-<body class="bg-surface text-on-surface min-h-screen flex font-body">
-<!-- SideNavBar (Shared Component) -->
-<nav class="fixed left-0 top-0 h-full w-72 flex flex-col p-6 gap-2 bg-emerald-50 dark:bg-slate-950 font-['Plus_Jakarta_Sans'] text-sm font-semibold rounded-r-[3rem] h-screen tonal-depth via surface-container-low flat no-line transition-all duration-300 ease-in-out hidden md:flex z-50">
-<!-- Header -->
-<div class="flex items-center gap-4 mb-8 px-4">
-<div class="w-12 h-12 bg-primary-container rounded-full flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-on-primary-container" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
-</div>
-<div>
-<h1 class="text-xl font-bold text-emerald-900 dark:text-emerald-100">Mochi Print</h1>
-<p class="text-xs text-emerald-700/70 dark:text-slate-400">Vending OS</p>
-</div>
-</div>
-<!-- Navigation Links -->
-<div class="flex flex-col gap-2 flex-grow">
-<!-- Home -->
-<a class="flex items-center gap-3 px-5 py-3 text-emerald-800/70 dark:text-slate-400 hover:bg-emerald-100 dark:hover:bg-slate-800 rounded-full transition-all duration-300 ease-in-out" href="#">
-<span class="material-symbols-outlined text-lg" data-icon="home">home</span>
-<span>Home</span>
-</a>
-<!-- My Files (Active for File Upload context) -->
-<a class="flex items-center gap-3 px-5 py-3 bg-emerald-200 dark:bg-emerald-900 text-emerald-900 dark:text-emerald-100 rounded-full font-bold transition-all duration-300 ease-in-out" href="#">
-<span class="material-symbols-outlined text-lg" data-icon="folder_open" style="font-variation-settings: 'FILL' 1;">folder_open</span>
-<span>My Files</span>
-</a>
-<!-- Recent Activity -->
-<a class="flex items-center gap-3 px-5 py-3 text-emerald-800/70 dark:text-slate-400 hover:bg-emerald-100 dark:hover:bg-slate-800 rounded-full transition-all duration-300 ease-in-out" href="#">
-<span class="material-symbols-outlined text-lg" data-icon="history">history</span>
-<span>Recent Activity</span>
-</a>
-<!-- Settings -->
-<a class="flex items-center gap-3 px-5 py-3 text-emerald-800/70 dark:text-slate-400 hover:bg-emerald-100 dark:hover:bg-slate-800 rounded-full transition-all duration-300 ease-in-out" href="#">
-<span class="material-symbols-outlined text-lg" data-icon="settings">settings</span>
-<span>Settings</span>
-</a>
-</div>
-<!-- CTA -->
-<div class="mt-auto pt-4">
-<button class="w-full bg-primary text-on-primary py-4 px-6 rounded-full font-bold shadow-lg shadow-primary-dim/20 hover:bg-primary-dim transition-colors flex items-center justify-center gap-2">
-<span class="material-symbols-outlined" data-icon="add" style="font-variation-settings: 'FILL' 1;">add</span>
-                New Print Job
-            </button>
-</div>
-</nav>
-<!-- Main Content Area -->
-<main class="flex-grow ml-0 md:ml-72 flex flex-col min-h-screen">
-<!-- TopNavBar (Shared Component - Mobile/Tablet only since Web has SideNav, but keeping it as requested per layout rules, though usually mutually exclusive. We'll hide on md to follow standard responsive nav patterns if SideNav is present, but the prompt says 'TopNavBar' is shared. We'll use it as a mobile header) -->
-<header class="md:hidden sticky top-0 z-50 flex justify-between items-center px-6 py-3 max-w-7xl mx-auto w-full bg-emerald-50/80 dark:bg-slate-900/80 backdrop-blur-xl font-['Plus_Jakarta_Sans'] tracking-tight rounded-full mt-4 mx-4 no-line tonal-shift shadow-xl shadow-emerald-900/5">
-<div class="text-2xl font-black text-emerald-800 dark:text-emerald-300">
-                Mochi Mint
+<body class="bg-[#f8faf9] text-[#2d3433] min-h-screen flex flex-col antialiased">
+
+    <header class="p-4 md:p-10 flex items-center justify-between max-w-5xl mx-auto w-full">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-[#2e695e] text-white rounded-full flex items-center justify-center shadow-lg"><span class="material-symbols-outlined">auto_awesome</span></div>
+            <h1 class="text-xl font-extrabold text-[#2e695e]">Mochi Print</h1>
+        </div>
+        <button onclick="location.reload()" class="bg-white border px-4 py-2 rounded-full text-sm font-bold shadow-sm">Start Over</button>
+    </header>
+
+    <main class="flex-grow p-4 md:px-12 max-w-5xl mx-auto w-full flex flex-col gap-6">
+        <h2 class="text-3xl md:text-5xl font-extrabold">Upload Files</h2>
+        
+        <input type="file" id="fileUploader" accept=".pdf" class="hidden">
+        <div id="uploadBox" class="bg-white rounded-[2rem] p-10 md:p-20 flex flex-col items-center border-2 border-dashed border-[#2e695e]/30 cursor-pointer shadow-sm">
+            <div class="w-20 h-20 bg-[#b2efe0] text-[#2e695e] rounded-full flex items-center justify-center mb-4"><span class="material-symbols-outlined text-4xl">upload_file</span></div>
+            <h3 class="text-xl font-bold">Choose your PDF</h3>
+        </div>
+
+        <div id="printSettingsPanel" class="hidden flex-col gap-6 animate-pulse-once">
+            <div class="bg-white rounded-[2rem] p-6 shadow-xl border border-gray-100 flex flex-col gap-6">
+                <div class="flex items-center gap-4 p-4 bg-[#b2efe0]/20 rounded-2xl">
+                    <span class="material-symbols-outlined text-[#2e695e]">picture_as_pdf</span>
+                    <div class="overflow-hidden"><h4 id="fileNameDisplay" class="font-bold truncate">document.pdf</h4><p id="pageCountDisplay" class="text-xs text-[#2e695e] font-bold">Reading...</p></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="flex flex-col gap-2">
+                        <span class="text-xs font-bold text-gray-400 uppercase">Copies</span>
+                        <div class="flex items-center justify-between bg-gray-50 p-2 rounded-2xl border">
+                            <button id="copyMinus" class="w-10 h-10 bg-white rounded-lg shadow-sm font-bold">-</button>
+                            <span id="copyCount" class="font-black text-xl text-[#2e695e]">1</span>
+                            <button id="copyPlus" class="w-10 h-10 bg-[#2e695e] text-white rounded-lg shadow-sm font-bold">+</button>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <span class="text-xs font-bold text-gray-400 uppercase">Color Mode</span>
+                        <div class="flex bg-gray-50 p-1 rounded-2xl border h-full">
+                            <button id="btnColor" class="flex-1 py-2 text-gray-500 font-bold rounded-xl transition-all">Color</button>
+                            <button id="btnBW" class="flex-1 py-2 bg-[#2e695e] text-white font-bold rounded-xl shadow-md transition-all">B&W</button>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <span class="text-xs font-bold text-gray-400 uppercase">Print Range</span>
+                        <div class="flex gap-2 h-full">
+                            <div class="bg-gray-50 border rounded-2xl flex items-center px-4 flex-grow"><input type="text" id="pageRangeInput" value="All" class="bg-transparent border-none w-full font-bold text-sm focus:ring-0" readonly></div>
+                            <button id="openRemoveModal" class="bg-[#2e695e] text-white px-4 rounded-2xl shadow-md"><span class="material-symbols-outlined">grid_view</span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="proceedToPayBtn" class="w-full py-5 bg-[#2e695e] text-white font-black text-xl rounded-2xl shadow-lg active:scale-95 transition-all">Proceed to Checkout</button>
             </div>
-<div class="flex items-center gap-4 text-emerald-800 dark:text-emerald-400">
-<button class="hover:bg-emerald-100/50 dark:hover:bg-slate-800 transition-colors p-2 rounded-full scale-95 active:scale-90 duration-200">
-<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
-</button>
-<button class="hover:bg-emerald-100/50 dark:hover:bg-slate-800 transition-colors p-2 rounded-full scale-95 active:scale-90 duration-200">
-<span class="material-symbols-outlined" data-icon="help">help</span>
-</button>
-<div class="w-10 h-10 rounded-full bg-primary-container overflow-hidden border-2 border-transparent">
-<img alt="User profile" class="w-full h-full object-cover" data-alt="close up portrait of a young woman with natural makeup in soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkhN_xJKSR-HtlFOxsYnGZynfVdlOrXq7hhOTpNPjJnlg5QNeFO4NsY9l3-oCGmBLEbWuToUqn5an6L2vIKvhZYhBEjdiYqdbyMO47ExXPs0qqzCFpaXbAMBlLZqggBtNqi3tDCbNecKvnVBSHIXIlmMLa0iDtuIoUi0MIrcoVcr-UBEMoVeJGnfKjDjoTJ1TmI9sNIMZWgeybUqFAiXMtDzNTzZpBtzcUNfX365liAREjLRsLKFjinWMUznQw2fbOjK1oKMhz5Q"/>
-</div>
-</div>
-</header>
-<div class="p-8 md:p-12 lg:p-16 max-w-7xl mx-auto w-full flex-grow flex flex-col gap-12">
-<!-- Page Header -->
-<div class="flex flex-col gap-4">
-<h2 class="text-[3.5rem] leading-none font-headline font-extrabold text-on-surface tracking-[-0.02em]">Upload Files</h2>
-<p class="text-lg text-on-surface-variant max-w-2xl">Drop your PDFs here. We'll handle the margins and make sure everything looks perfect before printing.</p>
-</div>
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-<!-- Main Upload Area -->
-<div class="lg:col-span-2 flex flex-col gap-8">
-<!-- Drag and Drop Zone -->
-<div class="bg-surface-container-lowest rounded-xl p-12 flex flex-col items-center justify-center text-center gap-6 border-2 border-dashed border-outline-variant/30 hover:border-primary/50 hover:bg-surface-container-low transition-all duration-300 cursor-pointer group shadow-sm">
-<div class="w-24 h-24 bg-primary-container rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-<span class="material-symbols-outlined text-5xl text-primary" data-icon="upload_file">upload_file</span>
-</div>
-<div>
-<h3 class="text-2xl font-bold text-on-surface mb-2">Drag &amp; Drop your PDFs</h3>
-<p class="text-on-surface-variant">or <span class="text-primary font-semibold underline decoration-primary/30 underline-offset-4">browse your device</span></p>
-</div>
-<p class="text-sm font-label uppercase tracking-wider text-outline mt-4">Max file size: 50MB</p>
-</div>
-<!-- File Progress Cards -->
-<div class="flex flex-col gap-4">
-<h4 class="text-xl font-bold text-on-surface mb-2">Current Uploads</h4>
-<!-- Uploading File -->
-<div class="bg-surface-container-lowest rounded-lg p-6 flex items-center gap-6 shadow-sm">
-<div class="w-14 h-14 bg-secondary-container rounded-full flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-on-secondary-container" data-icon="picture_as_pdf" style="font-variation-settings: 'FILL' 1;">picture_as_pdf</span>
-</div>
-<div class="flex-grow flex flex-col gap-2">
-<div class="flex justify-between items-center">
-<span class="font-bold text-on-surface">Annual_Report_2024.pdf</span>
-<span class="text-sm text-primary font-bold">64%</span>
-</div>
-<!-- Progress Bar -->
-<div class="h-3 w-full bg-surface-container-high rounded-full overflow-hidden">
-<div class="h-full bg-gradient-to-r from-primary to-primary-container rounded-full w-[64%]"></div>
-</div>
-<span class="text-xs text-on-surface-variant">4.2 MB / 6.5 MB</span>
-</div>
-<button class="p-3 text-outline hover:text-error transition-colors rounded-full hover:bg-surface-container-low">
-<span class="material-symbols-outlined" data-icon="close">close</span>
-</button>
-</div>
-<!-- Completed File -->
-<div class="bg-surface-container-lowest rounded-lg p-6 flex items-center gap-6 shadow-sm">
-<div class="w-14 h-14 bg-primary-container rounded-full flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-primary" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-</div>
-<div class="flex-grow flex flex-col gap-1">
-<div class="flex justify-between items-center">
-<span class="font-bold text-on-surface">Presentation_Deck_Final.pdf</span>
-</div>
-<span class="text-sm text-on-surface-variant">12.8 MB • Ready to print</span>
-</div>
-<button class="p-3 text-outline hover:text-error transition-colors rounded-full hover:bg-surface-container-low">
-<span class="material-symbols-outlined" data-icon="delete">delete</span>
-</button>
-</div>
-</div>
-</div>
-<!-- Guidelines Sidebar -->
-<div class="bg-surface-container-low rounded-xl p-8 flex flex-col gap-8">
-<h3 class="text-2xl font-bold text-on-surface">Print Guidelines</h3>
-<p class="text-on-surface-variant leading-relaxed">Follow these sweet tips to ensure your prints come out looking as soft and vibrant as a fresh mochi.</p>
-<div class="flex flex-col gap-6">
-<!-- Resolution -->
-<div class="flex gap-4 items-start">
-<div class="w-12 h-12 bg-surface-container-lowest rounded-full flex items-center justify-center shrink-0 shadow-sm text-primary">
-<span class="material-symbols-outlined" data-icon="high_quality">high_quality</span>
-</div>
-<div>
-<h4 class="font-bold text-on-surface text-lg">Resolution</h4>
-<p class="text-on-surface-variant mt-1">Keep images at 300 DPI for crisp, clear details.</p>
-</div>
-</div>
-<!-- Margins -->
-<div class="flex gap-4 items-start">
-<div class="w-12 h-12 bg-surface-container-lowest rounded-full flex items-center justify-center shrink-0 shadow-sm text-primary">
-<span class="material-symbols-outlined" data-icon="crop_free">crop_free</span>
-</div>
-<div>
-<h4 class="font-bold text-on-surface text-lg">Margins &amp; Bleed</h4>
-<p class="text-on-surface-variant mt-1">Include a 0.125" bleed if your design goes to the edge.</p>
-</div>
-</div>
-<!-- Color Mode -->
-<div class="flex gap-4 items-start">
-<div class="w-12 h-12 bg-surface-container-lowest rounded-full flex items-center justify-center shrink-0 shadow-sm text-primary">
-<span class="material-symbols-outlined" data-icon="palette">palette</span>
-</div>
-<div>
-<h4 class="font-bold text-on-surface text-lg">Color Mode</h4>
-<p class="text-on-surface-variant mt-1">Use CMYK color mode for the most accurate print colors.</p>
-</div>
-</div>
-</div>
-<div class="mt-4 p-6 bg-primary-container rounded-lg">
-<p class="text-on-primary-container font-semibold flex items-center gap-2">
-<span class="material-symbols-outlined" data-icon="lightbulb" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
-                            Pro Tip: Flatten your PDFs to avoid font issues!
-                        </p>
-</div>
-</div>
-</div>
-</div>
-</main>
-</body></html>
+        </div>
+    </main>
+
+    <div id="removePagesModal" class="hidden fixed inset-0 bg-white md:bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center">
+        <div class="bg-white md:rounded-3xl w-full h-full md:max-w-6xl md:h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-4 border-b flex justify-between items-center shrink-0">
+                <h2 class="text-xl font-black">Select Pages to Remove</h2>
+                <button id="closeModalBtn" class="p-2"><span class="material-symbols-outlined">close</span></button>
+            </div>
+            <div id="pageGrid" class="flex-grow p-4 overflow-y-auto bg-gray-50 grid grid-cols-2 md:grid-cols-5 gap-4"></div>
+            <div class="p-4 bg-white border-t flex justify-between items-center shrink-0 shadow-lg">
+                <div class="font-bold text-[#2e695e]">Final Print: <span id="modalFinalPages" class="text-2xl font-black">0</span></div>
+                <button id="savePagesBtn" class="bg-[#2e695e] text-white px-8 py-3 rounded-xl font-bold active:scale-95">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+        let pdfDoc = null, totalPages = 0, removedPagesSet = new Set(), copies = 1, isColor = false;
+
+        // DB save for checkout preview
+        function saveToDB(buffer) {
+            let req = indexedDB.open("MochiDB", 1);
+            req.onupgradeneeded = e => e.target.result.createObjectStore("files");
+            req.onsuccess = e => e.target.result.transaction("files", "readwrite").objectStore("files").put(buffer, "pdf");
+        }
+
+        document.getElementById('uploadBox').onclick = () => document.getElementById('fileUploader').click();
+        document.getElementById('fileUploader').onchange = (e) => {
+            const file = e.target.files[0];
+            if(!file) return;
+            document.getElementById('fileNameDisplay').innerText = file.name;
+            document.getElementById('uploadBox').classList.add('hidden');
+            document.getElementById('printSettingsPanel').classList.replace('hidden', 'flex');
+            
+            const reader = new FileReader();
+            reader.onload = function() {
+                saveToDB(this.result);
+                pdfjsLib.getDocument(new Uint8Array(this.result)).promise.then(pdf => {
+                    pdfDoc = pdf; totalPages = pdf.numPages;
+                    document.getElementById('pageCountDisplay').innerText = totalPages + " Pages Ready";
+                    renderGrid();
+                });
+            };
+            reader.readAsArrayBuffer(file);
+        };
+
+        function renderGrid() {
+            const grid = document.getElementById('pageGrid'); grid.innerHTML = "";
+            for(let i=1; i<=totalPages; i++) {
+                const box = document.createElement('div');
+                box.className = "relative border-2 rounded-xl aspect-[1/1.4] bg-white overflow-hidden";
+                const canvas = document.createElement('canvas'); canvas.className = "page-canvas"; box.appendChild(canvas);
+                const label = document.createElement('div'); label.className = "absolute bottom-0 w-full text-center py-1 bg-white/80 font-bold text-[10px]"; label.innerText = "Pg "+i; box.appendChild(label);
+                
+                box.onclick = () => {
+                    if(removedPagesSet.has(i)) { removedPagesSet.delete(i); box.classList.remove('page-removed'); }
+                    else { removedPagesSet.add(i); box.classList.add('page-removed'); }
+                    document.getElementById('modalFinalPages').innerText = totalPages - removedPagesSet.size;
+                };
+                grid.appendChild(box);
+                pdfDoc.getPage(i).then(p => {
+                    const vp = p.getViewport({scale: 0.4}); canvas.height = vp.height; canvas.width = vp.width;
+                    p.render({canvasContext: canvas.getContext('2d'), viewport: vp});
+                });
+            }
+        }
+
+        document.getElementById('copyPlus').onclick = () => { copies++; document.getElementById('copyCount').innerText = copies; };
+        document.getElementById('copyMinus').onclick = () => { if(copies>1) copies--; document.getElementById('copyCount').innerText = copies; };
+        document.getElementById('btnColor').onclick = () => { isColor = true; btnColor.className = "flex-1 py-2 bg-[#2e695e] text-white font-bold rounded-xl shadow-md"; btnBW.className = "flex-1 py-2 text-gray-500 font-bold rounded-xl"; };
+        document.getElementById('btnBW').onclick = () => { isColor = false; btnBW.className = "flex-1 py-2 bg-[#2e695e] text-white font-bold rounded-xl shadow-md"; btnColor.className = "flex-1 py-2 text-gray-500 font-bold rounded-xl"; };
+        document.getElementById('openRemoveModal').onclick = () => { document.getElementById('modalFinalPages').innerText = totalPages - removedPagesSet.size; document.getElementById('removePagesModal').classList.remove('hidden'); };
+        document.getElementById('closeModalBtn').onclick = () => document.getElementById('removePagesModal').classList.add('hidden');
+        document.getElementById('savePagesBtn').onclick = () => { document.getElementById('removePagesModal').classList.add('hidden'); document.getElementById('pageRangeInput').value = `Custom (${totalPages - removedPagesSet.size})`; };
+
+        document.getElementById('proceedToPayBtn').onclick = () => {
+            localStorage.setItem('m_pages', totalPages - removedPagesSet.size);
+            localStorage.setItem('m_orig', totalPages);
+            localStorage.setItem('m_copies', copies);
+            localStorage.setItem('m_color', isColor ? 'COLOR' : 'BW');
+            localStorage.setItem('m_removed', JSON.stringify(Array.from(removedPagesSet)));
+            location.href = "/checkout";
+        };
+    </script>
+</body>
+</html>

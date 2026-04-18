@@ -1,202 +1,97 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Print Settings &amp; Checkout</title>
-<!-- Google Fonts: Plus Jakarta Sans -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<!-- Material Symbols -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- Tailwind Config -->
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "tertiary-container": "#b6dffd",
-                        "error-container": "#fa746f",
-                        "surface-tint": "#2e695e",
-                        "surface-dim": "#d4dbda",
-                        "secondary-dim": "#644d50",
-                        "tertiary-fixed": "#b6dffd",
-                        "on-surface": "#2d3433",
-                        "surface-bright": "#f8faf9",
-                        "primary": "#2e695e",
-                        "on-primary-fixed-variant": "#2a655a",
-                        "on-tertiary-fixed": "#0f3e56",
-                        "error-dim": "#67040d",
-                        "on-tertiary-fixed-variant": "#325a74",
-                        "surface": "#f8faf9",
-                        "error": "#a83836",
-                        "on-background": "#2d3433",
-                        "inverse-on-surface": "#9b9d9d",
-                        "surface-container-low": "#f1f4f3",
-                        "primary-dim": "#205c52",
-                        "surface-container": "#eaefee",
-                        "surface-container-high": "#e4e9e8",
-                        "surface-container-highest": "#dde4e3",
-                        "on-surface-variant": "#596060",
-                        "on-tertiary-container": "#27516a",
-                        "primary-fixed": "#b2efe0",
-                        "outline-variant": "#acb3b2",
-                        "on-primary-container": "#1e5b50",
-                        "on-secondary-container": "#634c4f",
-                        "secondary-fixed": "#fbdbde",
-                        "secondary-fixed-dim": "#eccdd0",
-                        "on-secondary-fixed-variant": "#6d5658",
-                        "inverse-primary": "#c0fdee",
-                        "background": "#f8faf9",
-                        "on-primary-fixed": "#00483e",
-                        "secondary-container": "#fbdbde",
-                        "primary-container": "#b2efe0",
-                        "tertiary-dim": "#2e5770",
-                        "on-secondary": "#fff7f7",
-                        "surface-container-lowest": "#ffffff",
-                        "inverse-surface": "#0b0f0f",
-                        "surface-variant": "#dde4e3",
-                        "tertiary": "#3b637d",
-                        "secondary": "#71595c",
-                        "on-primary": "#e3fff7",
-                        "primary-fixed-dim": "#a4e0d2",
-                        "on-secondary-fixed": "#4f3a3c",
-                        "on-error": "#fff7f6",
-                        "on-tertiary": "#f5f9ff",
-                        "on-error-container": "#6e0a12",
-                        "outline": "#757c7b",
-                        "tertiary-fixed-dim": "#a8d1ef"
-                    },
-                    borderRadius: {
-                        "DEFAULT": "1rem",
-                        "lg": "2rem",
-                        "xl": "3rem",
-                        "full": "9999px"
-                    },
-                    fontFamily: {
-                        "headline": ["Plus Jakarta Sans", "sans-serif"],
-                        "body": ["Plus Jakarta Sans", "sans-serif"],
-                        "label": ["Plus Jakarta Sans", "sans-serif"]
-                    }
-                }
-            }
-        }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport"/>
+    <title>Mochi Print - Checkout</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .scroll-area { overflow-y: auto; scrollbar-width: none; }
+        .bw-filter canvas { filter: grayscale(100%) contrast(1.1); }
     </style>
 </head>
-<body class="bg-surface text-on-surface font-body antialiased min-h-screen flex flex-col selection:bg-primary-container selection:text-on-primary-container">
-<!-- Transactional Header: Minimal, focusing on the task -->
-<header class="p-6 flex items-center gap-6 max-w-7xl mx-auto w-full">
-<button class="w-12 h-12 flex items-center justify-center bg-surface-container-low hover:bg-surface-container text-primary rounded-full transition-colors group">
-<span class="material-symbols-outlined group-hover:-translate-x-1 transition-transform">arrow_back</span>
-</button>
-<h1 class="font-headline text-3xl font-extrabold tracking-tight text-on-surface">Print Settings</h1>
-</header>
-<!-- Main Content Canvas -->
-<main class="flex-1 max-w-7xl mx-auto w-full px-6 pb-20 grid grid-cols-1 lg:grid-cols-12 gap-10">
-<!-- Left Column: Document Preview (Asymmetric Focus) -->
-<div class="lg:col-span-7 flex flex-col gap-6">
-<!-- Preview Canvas with Soft Mint Border representation (Tonal Ring) -->
-<div class="bg-surface-container-low rounded-xl p-8 md:p-12 flex-1 flex flex-col items-center justify-center relative overflow-hidden ring-4 ring-primary-container/40">
-<!-- Decorative Metadata Tag -->
-<div class="absolute top-6 left-6 bg-surface-container-lowest text-primary px-5 py-2.5 rounded-full text-sm font-bold flex items-center gap-2 shadow-[0_4px_20px_rgba(45,52,51,0.05)]">
-<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">description</span>
-                    annual_report_final.pdf
+<body class="bg-[#f8faf9] text-[#2d3433] min-h-screen flex flex-col antialiased">
+    <header class="p-4 md:p-6 flex items-center gap-4 max-w-7xl mx-auto w-full">
+        <button onclick="history.back()" class="w-10 h-10 bg-white border rounded-full flex items-center justify-center shadow-sm"><span class="material-symbols-outlined">arrow_back</span></button>
+        <h1 class="text-2xl font-black">Checkout</h1>
+    </header>
+
+    <main class="flex-grow p-4 md:px-12 pb-10 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-7 flex flex-col gap-3 h-[50vh] md:h-[75vh]">
+            <h2 class="font-bold flex justify-between">Preview <span id="badge" class="bg-[#b2efe0] px-2 rounded-full text-xs">0 Pages</span></h2>
+            <div id="container" class="bg-gray-100 rounded-[2rem] p-4 flex-1 scroll-area flex flex-col gap-4 items-center">
+                <p class="mt-10 animate-pulse font-bold text-gray-400">Loading Memory...</p>
+            </div>
+        </div>
+
+        <div class="lg:col-span-5 flex flex-col justify-center">
+            <div class="bg-white border rounded-[2rem] p-6 md:p-10 shadow-2xl flex flex-col gap-6">
+                <h3 class="text-xl font-bold flex items-center gap-2"><span class="material-symbols-outlined">receipt_long</span> Detailed Bill</h3>
+                <div class="bg-gray-50 p-6 rounded-2xl border flex flex-col gap-4">
+                    <div class="flex justify-between font-bold"><span>Print Charge</span><span id="basePrice">₹0</span></div>
+                    <div class="flex justify-between text-sm text-gray-500"><span id="typeDisplay">Type</span><span id="rateDisplay">(@ ₹0/pg)</span></div>
+                    <div class="flex justify-between text-sm text-gray-500"><span>Platform Fee</span><span>₹5.00</span></div>
+                    <div class="border-t border-dashed my-2"></div>
+                    <div class="flex justify-between text-gray-500 text-sm"><span>GST (18%)</span><span id="gst">₹0</span></div>
+                    <div class="flex justify-between items-end"><span class="font-bold text-gray-500">Total</span><span id="total" class="text-4xl font-black text-[#2e695e]">₹0</span></div>
                 </div>
-<div class="absolute top-6 right-6 bg-primary-container text-on-primary-container px-4 py-2 rounded-full text-xs font-bold tracking-widest uppercase">
-                    Page 1 of 12
-                </div>
-<!-- The Document Preview Paper -->
-<div class="w-full max-w-md bg-surface-container-lowest rounded-lg p-2 mt-12 aspect-[1/1.4] relative shadow-[0_12px_40px_rgba(45,52,51,0.08)] transform transition-transform hover:scale-[1.02] duration-500">
-<img class="w-full h-full object-cover rounded-md opacity-90" data-alt="close up of a beautiful minimalist magazine layout with aesthetic typography and soft pastel imagery showing a clean editorial design" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDipGScpZhtS45ooVGTbtzBZsDkhnrD_oDO4c1u81xbv3o2opZ1fl6gZc6W9R73iiRDvXYHUPrgd-zgllY7kt8o_WeupZfzYbTV1azmgBW6W-fDIlU6rAxgw8AHe2TUDTEltPWCGyVxKqUYcYzKc1e7pLnHfNIgPuCt-vwaVbjgMLc1HpEro0fASEIPlcleNPZvp4G5atgXP_hn-4EVvmzvperttY3DZB9vo_9gIItO0zGxHEHT9Jyy-k9OdMYGwYtgHobImuQyPw"/>
-<!-- Soft reflection overlay -->
-<div class="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/30 rounded-lg pointer-events-none"></div>
-</div>
-</div>
-</div>
-<!-- Right Column: Settings & Checkout Panel -->
-<div class="lg:col-span-5 flex flex-col gap-8">
-<!-- Settings Card -->
-<div class="bg-surface-container-lowest rounded-xl p-8 shadow-[0_12px_40px_rgba(45,52,51,0.03)] flex flex-col gap-10">
-<!-- Copies Selector -->
-<div class="flex items-center justify-between">
-<div class="flex flex-col">
-<span class="font-headline text-lg font-bold text-on-surface">Copies</span>
-<span class="text-sm text-on-surface-variant">Number of sets</span>
-</div>
-<div class="flex items-center gap-3 bg-surface-container-low rounded-full p-1.5">
-<button class="w-12 h-12 flex items-center justify-center bg-surface-container-lowest text-on-surface-variant rounded-full shadow-sm hover:text-primary transition-colors">
-<span class="material-symbols-outlined">remove</span>
-</button>
-<span class="font-headline font-extrabold text-2xl w-10 text-center text-primary">3</span>
-<button class="w-12 h-12 flex items-center justify-center bg-surface-container-lowest text-primary rounded-full shadow-sm hover:bg-primary-container hover:text-on-primary-container transition-colors">
-<span class="material-symbols-outlined">add</span>
-</button>
-</div>
-</div>
-<!-- Color Mode Toggle -->
-<div class="flex flex-col gap-5">
-<div class="flex flex-col">
-<span class="font-headline text-lg font-bold text-on-surface">Color Mode</span>
-<span class="text-sm text-on-surface-variant">Choose ink type</span>
-</div>
-<div class="flex gap-3 bg-surface-container-low p-2 rounded-full relative">
-<!-- Active Button -->
-<button class="flex-1 py-4 px-6 bg-primary-container text-on-primary-container font-bold rounded-full flex items-center justify-center gap-3 shadow-[0_4px_12px_rgba(46,105,94,0.1)] transition-all">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">palette</span>
-                            Full Color
-                        </button>
-<!-- Inactive Button -->
-<button class="flex-1 py-4 px-6 text-on-surface-variant font-medium rounded-full flex items-center justify-center gap-3 hover:bg-surface-container transition-all">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">contrast</span>
-                            B&amp;W
-                        </button>
-</div>
-</div>
-</div>
-<!-- Checkout Summary Card -->
-<div class="bg-surface-container-low rounded-xl p-8 flex flex-col gap-8 relative overflow-hidden">
-<!-- Decorative background blob for "Airy" feel -->
-<div class="absolute -top-12 -right-12 w-48 h-48 bg-primary-container/30 rounded-full blur-3xl pointer-events-none"></div>
-<h2 class="font-headline text-xl font-bold text-on-surface relative z-10">Order Summary</h2>
-<div class="flex flex-col gap-6 text-base relative z-10">
-<div class="flex justify-between items-center text-on-surface-variant">
-<span class="font-medium">Document Print (12 pgs) x3</span>
-<span class="font-bold text-on-surface">$3.60</span>
-</div>
-<div class="flex justify-between items-center text-on-surface-variant">
-<span class="font-medium">Full Color Premium</span>
-<span class="font-bold text-on-surface">$1.20</span>
-</div>
-<div class="flex justify-between items-center text-on-surface-variant">
-<span class="font-medium">Service Tax</span>
-<span class="font-bold text-on-surface">$0.34</span>
-</div>
-</div>
-<!-- Tonal Separation via space, no lines -->
-<div class="pt-6 mt-2 flex justify-between items-end relative z-10">
-<span class="font-bold text-on-surface-variant mb-1">Total Due</span>
-<span class="font-headline text-[3.5rem] leading-none tracking-tight font-extrabold text-primary">$5.14</span>
-</div>
-<div class="flex flex-col gap-4 mt-4 relative z-10">
-<button class="w-full py-5 rounded-full bg-gradient-to-br from-primary to-primary-container text-surface-bright font-bold text-xl flex items-center justify-center gap-3 shadow-[0_12px_30px_rgba(46,105,94,0.25)] hover:scale-[0.98] active:scale-95 transition-transform">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">contactless</span>
-                        Pay &amp; Print
-                    </button>
-<p class="text-center text-sm font-medium text-on-surface-variant uppercase tracking-widest mt-2">
-                        Tap device to pay
-                    </p>
-</div>
-</div>
-</div>
-</main>
-</body></html>
+                <button id="payBtn" class="w-full py-5 bg-[#2e695e] text-white font-black text-xl rounded-2xl shadow-xl active:scale-95 transition-all">Pay & Print</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+        const pages = +localStorage.getItem('m_pages'), orig = +localStorage.getItem('m_orig'), copies = +localStorage.getItem('m_copies'), color = localStorage.getItem('m_color'), removed = new Set(JSON.parse(localStorage.getItem('m_removed')));
+        const rate = (color === 'COLOR' ? 5 : 2); const base = pages * copies * rate; const total = (base + 5) * 1.18;
+
+        document.getElementById('badge').innerText = pages + " Pages";
+        document.getElementById('basePrice').innerText = "₹" + base.toFixed(2);
+        document.getElementById('typeDisplay').innerText = "Type (" + color + ")";
+        document.getElementById('rateDisplay').innerText = "(@ ₹" + rate + "/pg)";
+        document.getElementById('gst').innerText = "₹" + ((base + 5) * 0.18).toFixed(2);
+        document.getElementById('total').innerText = "₹" + total.toFixed(2);
+        if(color !== 'COLOR') document.getElementById('container').classList.add('bw-filter');
+
+        // Render Preview
+        indexedDB.open("MochiDB", 1).onsuccess = e => {
+            e.target.result.transaction("files").objectStore("files").get("pdf").onsuccess = ev => {
+                pdfjsLib.getDocument(new Uint8Array(ev.target.result)).promise.then(pdf => {
+                    const container = document.getElementById('container'); container.innerHTML = "";
+                    for(let i=1; i<=orig; i++) {
+                        if(removed.has(i)) continue;
+                        const wrap = document.createElement('div'); wrap.className = "w-full bg-white shadow rounded-lg aspect-[1/1.414] relative";
+                        const canvas = document.createElement('canvas'); canvas.className = "w-full h-full object-contain"; wrap.appendChild(canvas);
+                        container.appendChild(wrap);
+                        pdf.getPage(i).then(p => {
+                            const vp = p.getViewport({scale: 1.0}); canvas.height = vp.height; canvas.width = vp.width;
+                            p.render({canvasContext: canvas.getContext('2d'), viewport: vp});
+                        });
+                    }
+                });
+            };
+        };
+
+        // 💳 Razorpay Logic
+        document.getElementById('payBtn').onclick = () => {
+            const options = {
+                "key": "rzp_test_XXXXXXXXXXXXXX", // 🛑 Test Key bosabi
+                "amount": total.toFixed(2) * 100,
+                "currency": "INR", "name": "Mochi Print",
+                "handler": function(res) {
+                    document.getElementById('payBtn').innerText = "Printing...";
+                    fetch('/print_document', {
+                        method: 'POST', headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({payment_id: res.razorpay_payment_id, copies: copies, color_mode: color})
+                    }).then(() => alert("🎉 Success! Check Printer."));
+                }
+            };
+            new Razorpay(options).open();
+        };
+    </script>
+</body>
+</html>

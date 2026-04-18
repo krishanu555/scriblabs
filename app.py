@@ -1,34 +1,46 @@
 from flask import Flask, render_template, request, jsonify
+import os
 
 app = Flask(__name__)
 
-# 1. The Home Page (Login/PIN Screen)
+# Routes
 @app.route('/')
-def home():
-    return render_template('login.html')
-
-# 2. File Upload Page
-@app.route('/upload')
-def upload_page():
+def index():
     return render_template('upload.html')
 
-# 3. Checkout / Print Settings Page
 @app.route('/checkout')
-def checkout_page():
+def checkout():
     return render_template('checkout.html')
 
-# 4. Asol API (ETA PORE PI ER SATHE KATHA BOLBE)
-@app.route('/verify_pin', methods=['POST'])
-def verify_pin():
-    data = request.json
-    pin = data.get('pin')
+# 🖨️ Asol Print Command Route
+@app.route('/print_document', methods=['POST'])
+def print_document():
+    data = request.get_json()
     
-    # Ekhonkar jonno ekta test PIN: 1234
-    if pin == "1234":
-        return jsonify({"status": "success", "message": "PIN Matched!"})
-    else:
-        return jsonify({"status": "error", "message": "Invalid PIN!"}), 400
+    payment_id = data.get('payment_id')
+    file_name = data.get('file_name')
+    copies = data.get('copies', 1)
+    color_mode = data.get('color_mode', 'BW')
+    
+    # Logic: Terminal-e print command execute hobe
+    print(f"💰 Payment Verified: {payment_id}")
+    
+    # 🛑 Raspberry Pi / Linux specific command
+    # lp -n [copies] -o monochrome [file_path]
+    try:
+        # Dummy print command (Uncomment os.system for real printer)
+        color_flag = "" if color_mode == "COLOR" else "-o monochrome"
+        print_cmd = f"lp -n {copies} {color_flag} './uploads/{file_name}'"
+        print(f"Executing: {print_cmd}")
+        
+        # os.system(print_cmd) 
+        
+        return jsonify({"status": "success", "message": "Print started!"})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)})
 
 if __name__ == '__main__':
-    # Eta tor laptop e server chalabe (Port 5000)
-    app.run(debug=True, port=5000)
+    # Uploads folder na thakle baniye nibe
+    if not os.path.exists('uploads'):
+        os.makedirs('uploads')
+    app.run(debug=True, host='0.0.0.0', port=5000)
